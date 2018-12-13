@@ -1,11 +1,7 @@
 import { Service } from 'typedi';
-import { EntityManager } from 'typeorm';
 import Koa from 'koa';
 import Router from 'koa-router';
-import { UserService } from '@app/services/user';
 import koaBody from 'koa-bodyparser';
-import koaHelmet from 'koa-helmet';
-import koaCors from '@koa/cors';
 import koaLogger from 'koa-logger';
 import { UsersController } from './users.controller';
 

@@ -13,9 +13,7 @@ import { UsersController } from './users.controller';
 export class App {
   koa!: Koa;
   constructor(
-    private userService: UserService,
     private ctrlUsers: UsersController,
-
   ) { }
 
   httpRoutes() {

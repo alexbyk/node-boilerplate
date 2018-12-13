@@ -11,7 +11,7 @@ const dbOpts: ConnectionOptions = {
   host: 'localhost',
   username: 'postgres',
   password: 'postgres',
-  database: 'test',
+  database: 'postgres',
   logging: true,
   synchronize: true,
   entities: ENTITIES,

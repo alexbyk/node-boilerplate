@@ -1,6 +1,7 @@
 import { ENTITIES } from '@app/entity';
 import { ConnectionOptions, createConnection } from 'typeorm';
 
+// docker run -p 5432:5432 -e POSTGRES_DB=test postgres:alpine
 export async function getTestConnection() {
   const dbOpts: ConnectionOptions = {
     type: 'postgres',

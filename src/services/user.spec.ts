@@ -10,7 +10,6 @@ let service: UserService;
 beforeAll(async () => {
   try { connection = await getTestConnection(); } catch (e) {
     // tslint:disable-next-line
-    console.log(`!!!!! \nDon't forget to run: docker run -p 5432:5432 -e POSTGRES_DB=test postgres:alpine\n----------`);
     throw e;
   }
 });

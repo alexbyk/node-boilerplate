@@ -9,21 +9,10 @@ export async function getTestConnection() {
     password: 'postgres',
     database: 'test',
     // logging: true,
-    synchronize: false,
+    synchronize: true,
     entities: ENTITIES,
   };
 
   const conn = await createConnection(dbOpts);
-  await conn.query(`
-DO $do$ BEGIN
-   IF EXISTS (SELECT 1 FROM pg_database WHERE datname = 'test') THEN
-      RAISE NOTICE 'Database already exists';
-   ELSE
-      CREATE DATABASE test;
-   END IF;
-END $do$;
-  `);
-
-  await conn.synchronize();
   return conn;
 }

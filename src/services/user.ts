@@ -7,9 +7,8 @@ export class UserService {
   constructor(public manager: EntityManager) { }
 
   async insert(name: string): Promise<User> {
-    return (await this.manager.createQueryBuilder().insert().into(User).values([{ name }]).returning('*').execute())[0];
+    return (await this.manager.query(`insert into "user" (name) values($1) returning *`, [name]))[0];
   }
 
-  async getOne(id: string) { return await this.manager.findOneById(User, id); }
-
+  async getOne(id: string) { return await this.manager.findOne(User, id); }
 }

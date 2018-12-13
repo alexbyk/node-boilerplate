@@ -8,7 +8,11 @@ let connection: Connection;
 let service: UserService;
 
 beforeAll(async () => {
-  connection = await getTestConnection();
+  try { connection = await getTestConnection(); } catch (e) {
+    // tslint:disable-next-line
+    console.log(`!!!!! \nDon't forget to run: docker run -p 5432:5432 -e POSTGRES_DB=test postgres:alpine\n----------`);
+    throw e;
+  }
 });
 
 beforeEach(async () => {
@@ -23,3 +27,5 @@ test('create/get', async () => {
   expect(user.id).toBe('1');
   expect(await service.getOne('1')).toMatchObject({ id: '1', name: 'First' });
 });
+
+afterAll(() => { if (connection) connection.close(); });

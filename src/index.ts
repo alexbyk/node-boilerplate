@@ -19,13 +19,8 @@ const dbOpts: ConnectionOptions = {
 
 const PORT = process.env.PORT || '3000';
 
-// const di = new Di();
-// di.set(Db, new Db(dbOpts));
-// const app = new App(di);
-
-// tslint:disable:no-console
 (async () => {
   const conn = await createConnection(dbOpts);
   Container.set(EntityManager, conn.manager);
-  console.log(`Listening on ${PORT}`);
+  Container.get<App>(App).start(3000);
 })();

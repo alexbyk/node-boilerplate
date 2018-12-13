@@ -3,7 +3,6 @@ import { EntityManager } from 'typeorm';
 import Koa from 'koa';
 import Router from 'koa-router';
 import { UserService } from '@app/services/user';
-import koaRouter from 'koa-router';
 import koaBody from 'koa-bodyparser';
 import koaHelmet from 'koa-helmet';
 import koaCors from '@koa/cors';
@@ -24,13 +23,14 @@ export class App {
     });
 
     router.post('/users', async (ctx, _) => {
-      console.log(ctx.body);
-      //  const user = await this.userService.insert(ctx.params.id);
-      //  if (!user) ctx.status = 404;
-      //  ctx.body = user;
+      const user = await this.userService.insert(ctx.request.body.name);
+      if (!user) ctx.status = 404;
+      ctx.body = user;
     });
 
-    this.koa = (new Koa()).use(koaLogger()).use(koaBody()).use(router.routes());
+    this.koa = (new Koa()).use(koaLogger())
+      .use(koaBody({}))
+      .use(router.routes());
     return this.listen(port);
   }
 

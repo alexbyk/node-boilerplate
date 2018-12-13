@@ -7,30 +7,29 @@ import koaBody from 'koa-bodyparser';
 import koaHelmet from 'koa-helmet';
 import koaCors from '@koa/cors';
 import koaLogger from 'koa-logger';
+import { UsersController } from './users.controller';
 
 @Service()
 export class App {
   koa!: Koa;
-  constructor(public userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private ctrlUsers: UsersController,
+
+  ) { }
+
+  httpRoutes() {
+    const router = new Router();
+    router.get('/users/:id', this.ctrlUsers.getOne);
+    router.post('/users', this.ctrlUsers.insert);
+    return router.routes();
+  }
 
   start(port: number | string) {
-    const router = new Router();
-
-    router.get('/users/:id', async (ctx, _) => {
-      const user = await this.userService.getOne(ctx.params.id);
-      if (!user) ctx.status = 404;
-      ctx.body = user;
-    });
-
-    router.post('/users', async (ctx, _) => {
-      const user = await this.userService.insert(ctx.request.body.name);
-      if (!user) ctx.status = 404;
-      ctx.body = user;
-    });
-
     this.koa = (new Koa()).use(koaLogger())
       .use(koaBody({}))
-      .use(router.routes());
+      .use(this.httpRoutes());
+
     return this.listen(port);
   }
 

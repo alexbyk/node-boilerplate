@@ -22,5 +22,5 @@ const PORT = process.env.PORT || '3000';
 (async () => {
   const conn = await createConnection(dbOpts);
   Container.set(EntityManager, conn.manager);
-  Container.get<App>(App).start(3000);
+  Container.get<App>(App).start(PORT);
 })();
